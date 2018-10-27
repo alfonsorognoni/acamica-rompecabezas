@@ -39,11 +39,25 @@ y utilice actualizarUltimoMovimiento para mostrarlo en pantalla */
 Existen diferentes formas de hacer este chequeo a partir de la grilla. */
 function chequearSiGano() {
     //COMPLETAR
+    var gano = true;
+    var cuenta = 1;
+    for (var i = 0; i < grilla.length; i++) {
+      var fila = grilla[i];
+      for (var j = 0; j < grilla.length; j++) {
+        var pieza = fila[j];
+        if (pieza !== cuenta) {
+          gano = false;
+        }
+        cuenta++;
+      }
+    }
+    return gano;
 }
 
 // Implementar alguna forma de mostrar un cartel que avise que ganaste el juego
 function mostrarCartelGanador() {
     //COMPLETAR
+    alert('skereeeee!')
 }
 
 /* Función que intercambia dos posiciones en la grilla.
@@ -58,17 +72,26 @@ Se te ocurre cómo solucionar esto con una variable temporal?
 */
 function intercambiarPosicionesGrilla(filaPos1, columnaPos1, filaPos2, columnaPos2) {
     //COMPLETAR
+    var pieza1 = grilla[filaPos1][columnaPos1];
+    var pieza2 = grilla[filaPos2][columnaPos2];
+    grilla[filaPos1][columnaPos1] = pieza2;
+    grilla[filaPos2][columnaPos2] = pieza1;
+    console.log(grilla);
+    
 }
 
 // Actualiza la posición de la pieza vacía
 function actualizarPosicionVacia(nuevaFila, nuevaColumna) {
     //COMPLETAR
+    filaVacia = nuevaFila;
+    columnaVacia = nuevaColumna;
 }
 
 
 // Para chequear si la posicón está dentro de la grilla.
 function posicionValida(fila, columna) {
     //COMPLETAR
+    return (fila >= 0 && fila < 3 && columna >= 0 && columna < 3) ? true : false;
 }
 
 /* Movimiento de fichas, en este caso la que se mueve es la blanca intercambiando su posición con otro elemento.
@@ -92,17 +115,23 @@ function moverEnDireccion(direccion) {
   // Mueve pieza hacia la derecha, reemplazandola con la blanca
   else if (direccion === codigosDireccion.DERECHA) {
     //COMPLETAR
+    nuevaFilaPiezaVacia = filaVacia;
+    nuevaColumnaPiezaVacia = columnaVacia - 1;
   }
     
   // Mueve pieza hacia la izquierda, reemplazandola con la blanca
   else if (direccion === codigosDireccion.IZQUIERDA) {
     // COMPLETAR
+    nuevaFilaPiezaVacia = filaVacia;
+    nuevaColumnaPiezaVacia = columnaVacia + 1;
   }
 
   /* A continuación se chequea si la nueva posición es válida, si lo es, se intercambia. 
   Para que esta parte del código funcione correctamente deberás haber implementado 
   las funciones posicionValida, intercambiarPosicionesGrilla y actualizarPosicionVacia */
-
+    // console.log(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia, '>>>>');
+    // console.log(posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia));
+    
     if (posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia)) {
         intercambiarPosiciones(filaVacia, columnaVacia, nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
         actualizarPosicionVacia(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
@@ -156,12 +185,13 @@ function intercambiarPosiciones(fila1, columna1, fila2, columna2) {
 las fichas en la pantalla */
 
 function intercambiarPosicionesDOM(idPieza1, idPieza2) {
+  // console.log(idPieza1, idPieza2);
   // Intercambio posiciones en el DOM
   var elementoPieza1 = document.getElementById(idPieza1);
   var elementoPieza2 = document.getElementById(idPieza2);
 
   var padre = elementoPieza1.parentNode;
-
+  
   var clonElemento1 = elementoPieza1.cloneNode(true);
   var clonElemento2 = elementoPieza2.cloneNode(true);
 
