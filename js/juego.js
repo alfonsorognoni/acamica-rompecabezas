@@ -36,10 +36,6 @@ function mostrarInstrucciones(instrucciones) {
 /*****
  *   Agregado por el alumno
  *****/
-function reiniciaMovimientos() {
-  movimientos = [];
-}
-
 function seleccionaPuzzle(nombre, btn) {
   var imagenes = document.querySelectorAll('.pieza img');
   for (let index = 0; index < imagenes.length; index++) {
