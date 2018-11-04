@@ -6,23 +6,33 @@
     <link rel="stylesheet" href="css/juego.css">
   </head>
   <body>
+    <div class="col-100">
+      <h2 id="selecciona-title">Selecciona un Rompecabezas</h2>
+      <div id="puzzles">
+        <div class="puzzle">
+          <button class="selected" onclick="seleccionaPuzzle('bmo', this)"><img src="images/bmo-final.png" data-puzzle="bmo" alt="BMO" width="90" height="90"></button>
+        </div>
+        <div class="puzzle">
+          <button onclick="seleccionaPuzzle('pikachu', this)"><img src="images/pikachu-final.png" data-puzzle="pikachu" alt="BMO" width="90" height="90"></button>
+        </div>
+      </div>
+    </div>
     <div class="col-40">
-    
       <div id="titulo">
-        <h1>Título</h1>
+        <h1>Rompecabezas</h1>
       </div>
       <div id="instrucciones">
-        <span id="instrucciones--titulo">Instrucciones</span>
+        <span class="titulo" id="instrucciones--titulo">Instrucciones</span>
         <ul id="lista-instrucciones">
         </ul>
       </div>
       <div id="objetivo">
-        <span id="objetivo--titulo">Objetivo</span>
-        <div>
-          <img src="images/final.png" alt="">
-        </div>
         <div class="texto-centrado">
-          <span class="objetivo">Último movimiento</span>
+            <span class="titulo" id="objetivo--titulo">Objetivo</span>
+            <div>
+              <img id="imagen-final" src="images/bmo-final.png" alt="">
+            </div>
+          <span class="titulo">Último movimiento</span>
         </div>
       </div>
       <div id="ultimo-mov">
@@ -34,19 +44,19 @@
     </div>
     <div class="col-60">
       <div id="juego">
-        <div class="pieza" id="pieza1"><img src="images/10.jpg" alt=""></div>
-        <div class="pieza" id="pieza2"><img src="images/20.jpg" alt=""></div>
-        <div class="pieza" id="pieza3"><img src="images/30.jpg" alt=""></div>
-        <div class="pieza" id="pieza4"><img src="images/40.jpg" alt=""></div>
-        <div class="pieza" id="pieza5"><img src="images/50.jpg" alt=""></div>
-        <div class="pieza" id="pieza6"><img src="images/60.jpg" alt=""></div>
-        <div class="pieza" id="pieza7"><img src="images/70.jpg" alt=""></div>
-        <div class="pieza" id="pieza8"><img src="images/80.jpg" alt=""></div>
-        <div class="pieza" id="pieza9"><img src="" alt=""></div>
+        <div class="pieza" id="pieza1"><img data-id="1" src="images/bmo-1.jpg" alt=""></div>
+        <div class="pieza" id="pieza2"><img data-id="2" src="images/bmo-2.jpg" alt=""></div>
+        <div class="pieza" id="pieza3"><img data-id="3" src="images/bmo-3.jpg" alt=""></div>
+        <div class="pieza" id="pieza4"><img data-id="4" src="images/bmo-4.jpg" alt=""></div>
+        <div class="pieza" id="pieza5"><img data-id="5" src="images/bmo-5.jpg" alt=""></div>
+        <div class="pieza" id="pieza6"><img data-id="6" src="images/bmo-6.jpg" alt=""></div>
+        <div class="pieza" id="pieza7"><img data-id="7" src="images/bmo-7.jpg" alt=""></div>
+        <div class="pieza" id="pieza8"><img data-id="8" src="images/bmo-8.jpg" alt=""></div>
+        <div class="pieza" id="pieza9"><img data-id="9" src="" alt=""></div>
       </div>
     </div>
     <div id="footer">
-      <span>Alfonso</span>
+      <span>💻 with 💚 by <a href="https://github.com/alfonsorognoni" target="_blank">Alfonso</a></span>
     </div>
     <script src="js/juego.js"></script>
   </body>

@@ -1,8 +1,7 @@
 // Arreglo que contiene las intrucciones del juego 
 var instrucciones = [
-  'instruccion 1',
-  'instruccion 2',
-  'instruccion 3'
+  'Utilizar las flechas para mover las piezas',
+  'Ordenar las piezas hasta alcanzar la imagen objetivo'
 ];
 // Arreglo para ir guardando los movimientos que se vayan realizando
 var movimientos = [];
@@ -26,10 +25,33 @@ Para eso deberás usar la función ya implementada mostrarInstruccionEnLista().
 Podés ver su implementación en la ultima parte de este codigo. */
 function mostrarInstrucciones(instrucciones) {
     //COMPLETAR
+    var listaInstrucciones = document.getElementById('lista-instrucciones');
+    listaInstrucciones.innerHTML = '';
     for (var index = 0; index < instrucciones.length; index++) {
       const instruccion = instrucciones[index];
       mostrarInstruccionEnLista(instruccion, 'lista-instrucciones');
     }
+}
+
+/*****
+ *   Agregado por el alumno
+ *****/
+function reiniciaMovimientos() {
+  movimientos = [];
+}
+
+function seleccionaPuzzle(nombre, btn) {
+  var imagenes = document.querySelectorAll('.pieza img');
+  for (let index = 0; index < imagenes.length; index++) {
+    var imagen = imagenes[index];
+    var pieza = imagen.getAttribute('data-id');
+    if (parseInt(pieza) !== 9) {
+      imagen.setAttribute('src', 'images/'+ nombre + '-' + pieza + '.jpg');
+    }
+  }
+  var imagenFinal = document.getElementById('imagen-final');
+  imagenFinal.setAttribute('src', 'images/' + nombre + '-final.png')
+  iniciar();
 }
 
 /* COMPLETAR: Crear función que agregue la última dirección al arreglo de movimientos
@@ -42,7 +64,7 @@ function chequearSiGano() {
     var gano = true;
     var cuenta = 1;
     for (var i = 0; i < grilla.length; i++) {
-      var fila = grilla[i];
+      var fila = grilla[i];      
       for (var j = 0; j < grilla.length; j++) {
         var pieza = fila[j];
         if (pieza !== cuenta) {
@@ -57,7 +79,7 @@ function chequearSiGano() {
 // Implementar alguna forma de mostrar un cartel que avise que ganaste el juego
 function mostrarCartelGanador() {
     //COMPLETAR
-    alert('skereeeee!')
+    alert('Ganaste! \nLo conseguiste en ' + movimientos.length + ' movimientos.');
 }
 
 /* Función que intercambia dos posiciones en la grilla.
@@ -74,10 +96,8 @@ function intercambiarPosicionesGrilla(filaPos1, columnaPos1, filaPos2, columnaPo
     //COMPLETAR
     var pieza1 = grilla[filaPos1][columnaPos1];
     var pieza2 = grilla[filaPos2][columnaPos2];
-    grilla[filaPos1][columnaPos1] = pieza2;
     grilla[filaPos2][columnaPos2] = pieza1;
-    console.log(grilla);
-    
+    grilla[filaPos1][columnaPos1] = pieza2;
 }
 
 // Actualiza la posición de la pieza vacía
@@ -96,7 +116,9 @@ function posicionValida(fila, columna) {
 
 /* Movimiento de fichas, en este caso la que se mueve es la blanca intercambiando su posición con otro elemento.
 Las direcciones están dadas por números que representa: arriba (38), abajo (40), izquierda (37), derecha (39) */
-function moverEnDireccion(direccion) {
+
+// Agregué el parámetro "mezcla" para no mostrar los movimientos que no realizó el usuario
+function moverEnDireccion(direccion, mezcla=false) {
   var nuevaFilaPiezaVacia;
   var nuevaColumnaPiezaVacia;
 
@@ -130,20 +152,19 @@ function moverEnDireccion(direccion) {
   Para que esta parte del código funcione correctamente deberás haber implementado 
   las funciones posicionValida, intercambiarPosicionesGrilla y actualizarPosicionVacia */
     // console.log(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia, '>>>>');
-    // console.log(posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia));
-    
+    // console.log(posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia));    
     if (posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia)) {
         intercambiarPosiciones(filaVacia, columnaVacia, nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
         actualizarPosicionVacia(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
-
         //COMPLETAR: Agregar la dirección del movimiento al arreglo de movimientos
-        agregaUltimoMovimiento(direccion);
-
+        if(!mezcla) {
+          agregaUltimoMovimiento(direccion);
+          actualizarUltimoMovimiento(direccion);
+        }
     }
 }
 function agregaUltimoMovimiento(direccion) {
   movimientos.push(direccion);
-  actualizarUltimoMovimiento(direccion)
 }
 
 //////////////////////////////////////////////////////////
@@ -174,11 +195,9 @@ la funcion intercambiarPosicionesGrilla() */
 function intercambiarPosiciones(fila1, columna1, fila2, columna2) {
   // Intercambio posiciones en la grilla
   var pieza1 = grilla[fila1][columna1];
-  var pieza2 = grilla[fila2][columna2];
-
+  var pieza2 = grilla[fila2][columna2];  
   intercambiarPosicionesGrilla(fila1, columna1, fila2, columna2);
   intercambiarPosicionesDOM('pieza' + pieza1, 'pieza' + pieza2);
-
 }
 
 /* Intercambio de posiciones de los elementos del DOM que representan
@@ -243,7 +262,7 @@ function mezclarPiezas(veces) {
     ];
 
   var direccion = direcciones[Math.floor(Math.random() * direcciones.length)];
-  moverEnDireccion(direccion);
+  moverEnDireccion(direccion, true);
 
   setTimeout(function() {
       mezclarPiezas(veces - 1);
